@@ -2,6 +2,8 @@
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
+var mongoose = require('mongoose');
+
 module.exports = app; // for testing
 
 var config = {
@@ -11,7 +13,13 @@ var config = {
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
 
-  // install middleware
+  // Mongoose connection, promises and error handling
+  mongoose.connect('mongodb://localhost/thougtlog', { useMongoClient: true }); // connection for mongodb
+  mongoose.Promise = global.Promise; // Sticking with ES6 promises only
+  mongoose.connection.on('error', (err) => {
+    console.error(`🚫  🚫  🚫  🚫 ➡ ${err.message}`);
+  });
+
   swaggerExpress.register(app);
 
   var port = process.env.PORT || 10010;

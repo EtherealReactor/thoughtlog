@@ -9,6 +9,10 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "mongoose": "^4.11.5",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "passport-local": "^1.0.0",
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {

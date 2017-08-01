@@ -1,3 +1,2 @@
-Thought Log :
-
-Everything I think, I write down here. An web application to share thoughts, realtime notify other user thoughts.
+# Thoughtlog
+Saving anything and everything that we think daily. It can be simple, stupid or shy thing. Helps maintain all those wonderful thoughts which may be useful :)
