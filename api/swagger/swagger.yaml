@@ -20,6 +20,11 @@ consumes:
 # format of the responses to the client (Accepts)
 produces:
   - application/json
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /users/signup:
     x-swagger-router-controller: users_controller
@@ -40,8 +45,71 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
-        default:
+            $ref: "#/definitions/UserCreateResponse"
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/profile:
+    x-swagger-router-controller: users_controller
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: API for fetching a users profile
+      operationId: profile
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/UserProfileResponse"
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/signin:
+    x-swagger-router-controller: users_controller
+    post:
+      tags:
+        - User
+      summary: Allows a user to signin to Thoughtlog
+      operationId: signin
+      parameters:
+        - in: body
+          name: body
+          description: User Signin
+          required: true
+          schema:
+            $ref: "#/definitions/UserSignin"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/UserProfileResponse"
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/logout:
+    x-swagger-router-controller: users_controller
+    delete:
+      security:
+        - Bearer: []
+      tags: 
+        - User
+      summary: Logsout a user on a specific device
+      operationId: logout
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
@@ -50,30 +118,53 @@ paths:
 # complex objects have schema definitions
 definitions:
   ErrorResponse:
+    type: object
     required:
       - message
     properties:
+      status:
+        type: string
+      message:
+        type: array
+        items:
+          type: string
+  UserCreateResponse:
+    type: object
+    required:
+        - message
+        - token
+    properties:
       message:
         type: string
-  ApiResponse:
-    type: "object"
-    required:
-        - status
-        - message
+      token:
+        type: string
+  UserProfileResponse:
+    type: object
     properties:
-      status:
-        type: "integer"
-        format: "int32"
-      message:
-        type: "string"
+      _id:
+        type: string
+      email:
+        type: string
+      username:
+        type: string
   User:
     properties:
       email:
         type: string
-        description: user email
       password:
         type: string
-        description: user password
+      username:
+        type: string
+    required:
+      - email
+      - password
+      - username
+  UserSignin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
     required:
       - email
       - password
