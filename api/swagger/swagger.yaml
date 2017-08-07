@@ -25,6 +25,7 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
+    description: Every request should include api_key in header.
 paths:
   /users/signup:
     x-swagger-router-controller: users_controller
@@ -59,6 +60,8 @@ paths:
         - User
       summary: API for fetching a users profile
       operationId: profile
+      parameters:
+        - $ref: '#/parameters/AuthorizationHeader'
       responses:
         "200":
           description: Success
@@ -100,6 +103,8 @@ paths:
         - User
       summary: Logsout a user on a specific device
       operationId: logout
+      parameters:
+        - $ref: '#/parameters/AuthorizationHeader'
       responses:
         "200":
           description: Success
@@ -116,6 +121,12 @@ paths:
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
+parameters:
+  AuthorizationHeader:
+    name: Authorization
+    type: string
+    in: header
+    required: false
 definitions:
   ErrorResponse:
     type: object

@@ -1,6 +1,7 @@
 'use strict';
 
 var SwaggerExpress = require('swagger-express-mw');
+var SwaggerUi = require('swagger-tools/middleware/swagger-ui');
 var app = require('express')();
 // All the variables defined in some.env file will be acccessible as proces.env.SOME_VARIABLE
 // Please put any configuration variables in configuration.env.sample
@@ -49,6 +50,8 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   mongoose.connection.on('error', (err) => {
     console.error(`🚫  🚫  🚫  🚫 ➡ ${err.message}`);
   });
+
+  app.use(SwaggerUi(swaggerExpress.runner.swagger));
 
   swaggerExpress.register(app);
 
