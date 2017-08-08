@@ -6,6 +6,9 @@ var validator = require('validator');
 var bcrypt = require('bcryptjs');
 mongoose.Promise = global.Promise;
 
+// ------------------------------------------------------------------------------
+//  Schema definition
+// ------------------------------------------------------------------------------
 var userSchema = new mongoose.Schema({
   email: {
     type: String,

@@ -10,6 +10,8 @@ basePath: /
 tags:
 - name: User
   description: "User Authentication Management"
+- name: Thoughts
+  description: "Thoughts related endpoints"
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -118,6 +120,15 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /thoughts:
+    get:
+      tags:
+        - Thoughts
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Thoughts"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -179,3 +190,21 @@ definitions:
     required:
       - email
       - password
+  ThoughtSchema:
+    properties:
+      description:
+        type: string
+      status:
+        type: string
+      author:
+        type: string
+      updated_at:
+        type: string
+        format: date
+    required:
+      - description
+      - status
+  Thoughts:
+    type: array
+    items:
+      $ref: "#/definitions/ThoughtSchema"
