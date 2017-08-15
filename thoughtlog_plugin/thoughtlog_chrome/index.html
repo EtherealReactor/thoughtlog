@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" ng-init="thoughts=[]">
+<head>
+    <title>Thoughtlog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css" />
+    <link href="assets/stylesheets/app.css" rel="stylesheet" />
+   <!--  <script type="text/javascript">
+      // var currentUser, socket;
+    </script> -->
+    <style type="text/css">
+      body {
+        font-family: "Georgia",Helvetica,Arial,sans-serif;
+        font-size: 15px;
+        color: #444;
+      }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#!/">ThoughtLog</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active" id='thlink'><a href="#!/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li class="active" id="bookmark"><a href="#!/"><span class="glyphicon glyphicon-home"></span> bookmark</a></li>
+        <!-- <li><a href="#!/about"><span class="glyphicon glyphicon-info-sign"></span> About us</a></li> -->
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#!/" style="display:none"><span class="glyphicon glyphicon-user"></span> <span id="current-user" ng-bind="globals.currentUser.username"></span></a></li>
+        <!-- <li><a href="#!/add_thought"><span class="glyphicon glyphicon-plus"></span> Thought</a></li> -->
+        <li><a href="#!/login"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <!-- <div class="col-sm-1 sidenav">
+      <p><a href="#">Link</a></p>
+    </div> -->
+    <div class="text-left container-fluid "> 
+        <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+        <div id='thoughts'>
+        <div ng-view></div>
+        </div>
+        <div class="row" id="bookmarkDiv" style="width:780px">
+</div>
+    </div>
+      <!--
+    <div class="col-sm-4 col-md-4 sidenav">
+      <div class="row well">
+        <h4>Shared thoughts</h4>
+        <div class="panel panel-default">
+          <div class="panel-body">Shared thoughts</div>
+        </div>
+      </div>
+
+      <div class="row well">
+        <h4>Comments</h4>
+        <div class="panel panel-default">
+          <div class="panel-body">Comments</div>
+        </div>
+      </div>
+    </div>
+-->
+  </div>
+</div>
+
+<footer class="container-fluid text-center footer">
+  <p>ThoughtLog <span class='glyphicon glyphicon-copyright-mark'></span> <sub>Everything I think, I write down..! </sub></p>
+</footer>
+     <script src="import.js"></script>
+    <script src="assets/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="assets/javascripts/socket.io.min.js"></script>
+    <script src="assets/javascripts/bootstrap.min.js"></script>
+    <script src="assets/javascripts/angular.min.js"></script>
+    <script src="assets/javascripts/angular-route.min.js"></script>
+    <script src="assets/javascripts/angular-cookies.min.js"></script>
+    <script src="assets/javascripts/angular-sanitize.js"></script>
+    <!-- // <script src="assets/javascripts/angular-linkify.min.js"></script> -->
+    <script src="assets/javascripts/jquery.noty.packaged.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="services/authentication.service.js"></script>
+    <script src="services/flash.service.js"></script>
+    <script src="services/thoughts_service.js"></script>
+
+    <!-- Real user service that uses an api -->
+    <script src="services/user.service.js"></script>
+
+    <!-- Fake user service for demo that uses local storage -->
+    <!-- // <script src="services/user.service.local-storage.js"></script> -->
+    <script src="services/constants_service.js"></script>
+
+    <script src="controllers/home.controller.js"></script>
+    <script src="controllers/login.controller.js"></script>
+    <script src="controllers/register.controller.js"></script>
+    <script src="controllers/thoughts_controller.js"></script>
+
+</body>
+</html>

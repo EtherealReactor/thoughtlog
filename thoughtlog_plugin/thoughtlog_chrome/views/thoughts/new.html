@@ -1,0 +1,76 @@
+<label for="description">ADD A THOUGHT</label>
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel-default " style="float:center">
+        <div class="panel-body">
+           <form name="form" ng-submit="vm.ThoughtCreate()" role="form" class="form-inline">
+                
+                <div class="form-group" ng-class="{ 'has-error': form.description.$dirty && form.description.$error.required }">
+                    <textarea name="description" id="description" class="form-control col-md-12" ng-model="vm.thought.description" style="min-width: 100%; max-width: 100%; margin: 0px; width: 735px; height: 50px;" rows="3" placeholder="Everything I think, I write down here..!" required  ></textarea>
+
+                    <span ng-show="form.description.$dirty && form.description.$error.required" class="help-block">Thought is required</span>
+                </div>
+                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary"><span class="glyphicon glyphicon glyphicon-plus"></span> Save</button>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+           <span style="font-size:16px"><b>THOUGHTS</b></span>
+    </div>
+</div>
+
+<div class="row" id="thoughts">
+    <div class="col-sm-12">
+    <div class="list-group row">
+      <div class="list-group-item" ng-repeat="thought in thoughts | orderBy: '-created_at'">
+        <div id="thought_{{thought._id}}">
+          <span class="list-group-item-heading" style="color:#555;font-size:15px"><b>{{thought.created_at | date:'yyyy-MM-dd h:mma' : 'IST'}} by {{thought.created_by}}</b></span><span class="glyphicon glyphicon-trash" ng-click="vm.deleteThought(thought._id)" style="float:right" title="Delete thought"></span>
+          <p class="list-group-item-text" ng-bind-html="vm.sanitizeHtml(thought.description)" ></p>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>
+
+<!-- 
+<script type="text/javascript">
+  // $(document).ready(function(){
+  //   // socket = io('http://localhost:9000/');
+  //   socket = io('http://ec2-35-154-178-237.ap-south-1.compute.amazonaws.com');
+  //   socket.on('connect', function (){
+  //     socket.emit('join', {
+  //       channel: "notifications",
+  //       username: currentUser.username
+  //     });
+
+  //     socket.on('notifications', function (notification){
+  //       if(notification.type=='thought'){
+  //         var scope = angular.element("#thoughts").scope();
+  //         scope.$apply(function(){
+  //           scope.thoughts.push(notification.thoughtHash)
+  //         });
+  //       }
+  //     });
+
+  //   });
+
+  //   // $('*[id*=thought_]').each(function() {
+  //   //   alert(1)
+  //   //     var desc = $(this).find('p').first();
+  //   //     desc.html(make_links(desc.html()));
+  //   // });
+  // });
+
+  // // function make_links(text, className='', target='_blank'){
+  // //     return preg_replace('!((http\:\/\/|ftp\:\/\/|https\:\/\/)|www\.)([-a-zA-Zа-яА-Я0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?!ism', 
+  // //     '<a class="'.className.'" href="//$3" target="'.target.'">$1$3</a>', 
+  // //     text);
+  // // }
+ 
+</script>
+ -->

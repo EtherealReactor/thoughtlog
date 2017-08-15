@@ -1,0 +1,20 @@
+{
+  "name": "ThoughtLog",
+  "short_name": "ThoughtLog",
+  "description": "log your thoughts",
+  "version": "0.1",
+  "manifest_version": 2,
+  "browser_action": {
+      "default_icon": "import.png",
+      "default_popup": "index.html"
+    },
+  "icons": { "64": "import.png" },
+  "author": {"name": "neelmani", "twitter_handle": "neelmani", "github": "http://github.com/neelmanishankar"},
+   "options_page": "options.html",
+  "background" : { "scripts": ["jquery-3.1.1.min.js","background.js"] },
+  "content_scripts": [ {
+      "js": [ "jquery-3.1.1.min.js","import.js" ],
+      "matches": [ "https://*.getpocket.com/*"]
+    }],
+  "permissions": [ "bookmarks", "identity" ,"contextMenus", "tabs","notifications"]
+}
