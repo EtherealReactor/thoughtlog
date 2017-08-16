@@ -43,7 +43,7 @@ function show() {
   // $( ".result" ).html( data );
   // alert( "Load was performed." );
   thought=data.reverse()[0];
-  if (localStorage.lastThought == thought._id)
+  if (localStorage.lastThought != thought._id)
   {
     localStorage.lastThought=thought._id
     var notification = new Notification(hour + time[2] + ' ' + period, {
@@ -51,7 +51,7 @@ function show() {
     body: thought.description
   });
     notification.onclick = function () {
-      window.open("http://stackoverflow.com/a/13328397/1269037");      
+      window.open("http://thoughtlog.thehelmet.life");      
     };
   }
 
