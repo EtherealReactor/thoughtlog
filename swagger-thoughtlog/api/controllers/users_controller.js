@@ -15,7 +15,7 @@ const signup = (req, res, next) => {
       res.header('token', token).status(200).send({ message: 'User created successfully', token: token })
     }).catch((err) => {
       const messages = err.toString().replace('ValidationError: ', '').split(',');
-      res.status(400).send({ message: messages });
+      res.status(400).send({ errors: messages });
     });
 };
 

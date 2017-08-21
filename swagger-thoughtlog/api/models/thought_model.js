@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 mongoose.Promise = global.Promise;
 
 // ------------------------------------------------------------------------------
@@ -14,7 +15,7 @@ const thoughtSchema = new mongoose.Schema({
   description: {
     type: String,
     trim: true,
-    required: [true, 'A thought should have some description.']
+    required: [true, 'A thought should have some description.'],
     minlength: [5, 'A thought should be atleast 5 characters long']
   },
   author: {
@@ -32,6 +33,7 @@ const thoughtSchema = new mongoose.Schema({
   }
 });
 
+thoughtSchema.plugin(mongoosePaginate);
 var Thought = mongoose.model('Thought', thoughtSchema);
 
-module.exports = Thought;
+module.exports = { Thought };

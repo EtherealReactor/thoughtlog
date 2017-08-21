@@ -121,14 +121,41 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /thoughts:
+    x-swagger-router-controller: thoughts_controller
     get:
       tags:
         - Thoughts
+      summary: API for fetching all the thoughts
+      operationId: fetchAllThoughts
+      parameters:
+        - $ref: "#/parameters/Page"
+        - $ref: "#/parameters/Limit"
       responses:
         "200":
           description: Success
           schema:
             $ref: "#/definitions/Thoughts"
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      tags:
+      - Thoughts
+      summary: API for creating a thought
+      operationId: createThought
+      parameters:
+        - in: body
+          name: body
+          description: Parameters needed for thought creation
+          required: true
+          schema:
+            $ref: "#/definitions/ThoughtCreateParams"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Thought"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -138,15 +165,27 @@ parameters:
     type: string
     in: header
     required: false
+  Page:
+    name: page
+    description: Page number
+    type: integer
+    in: query
+    default: 1
+  Limit:
+    name: limit
+    description: No of records we want while fetch
+    type: integer
+    in: query
+    default: 10
 definitions:
   ErrorResponse:
     type: object
     required:
-      - message
+      - errors
     properties:
       status:
         type: string
-      message:
+      errors:
         type: array
         items:
           type: string
@@ -190,21 +229,52 @@ definitions:
     required:
       - email
       - password
-  ThoughtSchema:
+  ThoughtCreateParams:
     properties:
       description:
         type: string
       status:
         type: string
-      author:
-        type: string
-      updated_at:
-        type: string
-        format: date
+        enum: ['published', 'deleted', 'drafted']
     required:
       - description
       - status
+  Thought:
+    type:
+      object
+    properties:
+      _id: 
+        type: string
+      description:
+        type: string
+      status:
+        type: string
+      updated_at:
+        type: string
+    required:
+      - _id
+      - description
+      - status
+      - updated_at
   Thoughts:
-    type: array
-    items:
-      $ref: "#/definitions/ThoughtSchema"
+    type: object
+    properties:
+      thoughts:
+        type: array
+        items:
+          $ref: "#/definitions/Thought"
+      all_thoughts:
+        type: integer
+      total_pages:
+        type: integer
+      current_page:
+        type: integer
+      limit:
+        type: integer
+    required:
+      - thoughts
+      - all_thoughts
+      - total_pages
+      - current_page
+      - limit
+ 
