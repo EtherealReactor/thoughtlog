@@ -117,7 +117,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
         "404":
-          description: Error
+          description: Not Found
           schema:
             $ref: "#/definitions/ErrorResponse"
   /thoughts:
@@ -156,6 +156,86 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/Thought"
+  /thought/{id}:
+    x-swagger-router-controller: thoughts_controller
+    get:
+      tags:
+      - Thoughts
+      summary: API for fetching a single thought
+      operationId: showThought
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: Thought Id
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Thought"
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags:
+        - Thoughts
+      summary: For removing a thought
+      operationId: removeThought
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: Thought Id
+          required: true
+      responses:
+        "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/Thought"
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      tags:
+        - Thoughts
+      summary: For updating a thought.
+      operationId: updateThought
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: Thought Id
+          required: true
+        - in: body
+          name: thought
+          description: Parameters needed for thought updation
+          required: true
+          schema:
+            $ref: "#/definitions/ThoughtCreateParams"
+      responses:
+        "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/Thought"
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"   
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions

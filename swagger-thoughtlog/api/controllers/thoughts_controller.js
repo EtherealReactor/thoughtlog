@@ -28,4 +28,42 @@ const fetchAllThoughts = (req, res, next) => {
   });
 }
 
-module.exports = { createThought, fetchAllThoughts };
+const showThought = (req, res, next) => {
+  var id = req.query.id
+  Thought.find({_id: req.swagger.params.id.value})
+    .then((thought) => {
+      if(thought.length > 0) {
+        res.status(200).send(_.pick(thought[0], ['_id', 'description', 'status', 'updated_at']))
+      }
+      res.status(404).send({ errors: ['Valid Id. But no thought found for the given Id'] })
+    }).catch((err) => {
+      res.status(400).send({errors: err.toString().replace('MongooseError: ', '').split(',')})
+    })
+};
+
+const removeThought = (req, res, next) => {
+  Thought.findOneAndUpdate({ _id: req.swagger.params.id.value }, { status: 'deleted' }, { new: true })
+    .then((thought) => {
+      if(thought) {
+        res.status(200).send(_.pick(thought, ['_id', 'description', 'status', 'updated_at']))
+      }
+      res.status(404).send({ errors: ['No thought found for the given Id'] })
+    }).catch((err) => {
+      res.send(400).send({errors: []})
+    });
+}
+
+const updateThought = (req, res, next) => {
+  Thought.findOneAndUpdate({ _id: req.swagger.params.id.value }, req.body, { new: true, runValidators: true })
+    .then((thought) => {
+      if(thought) {
+        res.status(200).send(_.pick(thought, ['_id', 'description', 'status', 'updated_at']))
+      }
+      res.status(404).send({ errors: ['No thought found for the given Id'] })
+    }).catch((err) => {
+      const messages = err.toString().replace('ValidationError: ', '').split(',');
+      res.status(400).send({ errors: messages });
+    });
+}
+
+module.exports = { createThought, fetchAllThoughts, showThought, removeThought, updateThought };
